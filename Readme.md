@@ -4,15 +4,16 @@ A simple and user-friendly expense tracker built using Python's `tkinter` for th
 
 ---
 
-## 💡 Features
+💡 Features
+Add expense details (name, amount, date)
 
-- Add daily expenses with:
-  - Expense Name
-  - Amount 
-  - Date (any format)
-- View all your saved expenses
-- Simple and clean interface
-- Lightweight and offline (no internet required)
+View all expenses in a tabular format using Treeview
+
+Data is saved permanently in a local SQLite database (expenses.db)
+
+User-friendly interface with colored labels and buttons
+
+✅ Real-time display of added expenses
 
 ---
 
@@ -32,10 +33,11 @@ _No external libraries needed — uses built-in `tkinter` and `sqlite3`._
    python expense_tracker.py
 
 ## 📈 Future Features (Planned)
+-  Delete expense by selecting the row
+-  Export expenses to CSV
+-  Filter by date
+-  Add categories/tags
+-  Monthly summary/graph view
 
-- [ ] View expenses in a table/grid (Treeview)
-- [ ] Delete expense by ID
-- [ ] Export expenses to CSV
-- [ ] Filter by date
-- [ ] Add categories/tags
-- [ ] Monthly summary/graph view
+## Screenshot
+![Screenshot 2025-04-16 182111](https://github.com/user-attachments/assets/6407e568-e962-4ac7-8747-c9a2947dfc59)

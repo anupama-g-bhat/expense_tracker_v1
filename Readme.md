@@ -5,15 +5,16 @@ A simple and user-friendly expense tracker built using Python's `tkinter` for th
 ---
 
 💡 Features
-Add expense details (name, amount, date)
 
-View all expenses in a tabular format using Treeview
-
-Data is saved permanently in a local SQLite database (expenses.db)
-
-User-friendly interface with colored labels and buttons
-
-✅ Real-time display of added expenses
+   Add expense details (name, amount, date)
+   
+   View all expenses in a tabular format using Treeview
+   
+   Data is saved permanently in a local SQLite database (expenses.db)
+   
+   User-friendly interface with colored labels and buttons
+   
+   ✅ Real-time display of added expenses
 
 ---
 

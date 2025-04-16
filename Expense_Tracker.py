@@ -1,5 +1,6 @@
 import sqlite3
 import tkinter as tk
+from tkinter import ttk
 
 # Setup SQLite DB
 def setup_sql_db():
@@ -29,22 +30,25 @@ def add_expense():
             expense_entry.delete(0,tk.END)
             amount_entry.delete(0,tk.END)
             date_entry.delete(0,tk.END)
+            show_expenses()
         except Exception as e :
             result_label.config(text=f"Error: {e}", fg="red")
     else :
          result_label.config(text="⚠️ Please fill all fields!", fg="red")
 
 def show_expenses():
+    for row in tree.get_children():
+        tree.delete(row)
+
     connection = sqlite3.connect("expenses.db")
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM expenses")
     rows = cursor.fetchall()
     connection.close()
 
-    expenses_text.delete(1.0, tk.END)  # Clear previous text
+    
     for row in rows:
-        expenses_text.insert(tk.END, f"ID: {row[0]}, Name: {row[1]}, Amount: {row[2]}, Date: {row[3]}\n")
-
+        tree.insert("",tk.END, values=row)
 
 setup_sql_db()
 
@@ -77,8 +81,20 @@ result_label.pack(pady =10)
 tk.Button(root, text="Add Expenses",command = add_expense,font=("Calibri",15,"bold"),fg="yellow",bg="green", bd=4).pack(pady =10)
 tk.Button(root, text="Show All Expenses", command=show_expenses, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
 
-expenses_text = tk.Text(root, height=10, width=50, font=("Arial", 10))
-expenses_text.pack(pady=10)
+# Create Treeview for displaying expenses
+columns = ("ID", "Name", "Amount", "Date")
+tree = ttk.Treeview(root, columns=columns, show="headings", height=8)
+
+# Setup columns and headings for the treeview
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, width=100, anchor="center")
+
+tree.pack(pady=10, fill=tk.X)
+
+# Initial call to show expenses on startup (if any)
+show_expenses()
 
 #create a main loop
+show_expenses()
 root.mainloop()

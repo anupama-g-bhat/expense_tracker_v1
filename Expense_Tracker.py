@@ -50,8 +50,25 @@ def show_expenses():
     for row in rows:
         tree.insert("",tk.END, values=row)
 
-setup_sql_db()
+def delete_selected_expense():
+    selected_item = tree.selection()
+    if not selected_item :
+        result_label.config(text="⚠️Please select a row to delete",fg="red")
+        return
+    
+    expense_id = tree.item(selected_item)["values"][0]
+    try:
+        connection =sqlite3.connect("expenses.db")
+        cursor = connection.cursor()
+        cursor.execute('''DELETE FROM expenses WHERE Sl_num=?''',(expense_id,))
+        connection.commit()
+        connection.close()
 
+        tree.delete(selected_item)
+        result_label.config(text="🚮Deleted Successfully!",fg ="green")
+    except Exception as e :
+        result_label.config(text="Error",fg="red")
+setup_sql_db()
 # Create  a main window
 root = tk.Tk()
 root.title("Welcome to Your Expense Tracker 📉")
@@ -80,6 +97,7 @@ result_label.pack(pady =10)
 #craete a button
 tk.Button(root, text="Add Expenses",command = add_expense,font=("Calibri",15,"bold"),fg="yellow",bg="green", bd=4).pack(pady =10)
 tk.Button(root, text="Show All Expenses", command=show_expenses, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
+tk.Button(root, text="Delete Selected Expense", command=delete_selected_expense, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
 
 # Create Treeview for displaying expenses
 columns = ("ID", "Name", "Amount", "Date")

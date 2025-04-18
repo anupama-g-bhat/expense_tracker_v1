@@ -18,6 +18,7 @@ A simple and user-friendly expense tracker built using Python's `tkinter` for th
    
    Delete Selected Expense: Allows users to delete a selected expense from the list.
    
+   Export expenses to CSV
 
 ---
 
@@ -37,11 +38,11 @@ _No external libraries needed — uses built-in `tkinter` and `sqlite3`._
    python expense_tracker.py
 
 ## 📈 Future Features (Planned)
--  Export expenses to CSV
 -  Filter by date
 -  Add categories/tags
 -  Monthly summary/graph view
 
 ## Screenshot
-![Screenshot 2025-04-17 190331](https://github.com/user-attachments/assets/53af191a-2cf3-4727-af92-879d507e695b)
+
+![Screenshot 2025-04-18 182628](https://github.com/user-attachments/assets/d464fb34-6075-4b43-9042-36bfb27750ff)
 

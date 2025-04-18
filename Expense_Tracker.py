@@ -1,6 +1,8 @@
 import sqlite3
+import csv
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 
 # Setup SQLite DB
 def setup_sql_db():
@@ -68,6 +70,31 @@ def delete_selected_expense():
         result_label.config(text="🚮Deleted Successfully!",fg ="green")
     except Exception as e :
         result_label.config(text="Error",fg="red")
+
+def export_to_csv():
+    #Ask where to save the file 
+    file_path = filedialog.asksaveasfilename(defaultextension=".csv",filetypes=[("csv files","*.csv")])
+    if not file_path:
+        return
+    
+    try :
+        connection = sqlite3.connect("expenses.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM expenses")
+        rows = cursor.fetchall()
+        connection.close()
+
+        #Write records into csv file
+        with open(file_path,"w",newline='') as file:
+            writer =csv.writer(file)
+            writer.writerow(["ID","Name","Amount","Date"]) #CSV headers
+            writer.writerows(rows) #All rows from database
+
+        result_label.config(text ="✅Exptorted to CSV successfully!", fg="green")
+
+    except Exception as e:
+        result_label.config(text= "Error in exporting", fg="red")
+
 setup_sql_db()
 # Create  a main window
 root = tk.Tk()
@@ -98,6 +125,7 @@ result_label.pack(pady =10)
 tk.Button(root, text="Add Expenses",command = add_expense,font=("Calibri",15,"bold"),fg="yellow",bg="green", bd=4).pack(pady =10)
 tk.Button(root, text="Show All Expenses", command=show_expenses, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
 tk.Button(root, text="Delete Selected Expense", command=delete_selected_expense, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
+tk.Button(root, text="Export to CSV file", command=export_to_csv, font=("Calibri", 15, "bold"), fg="yellow", bg="purple", bd=4).pack(pady=10)
 
 # Create Treeview for displaying expenses
 columns = ("ID", "Name", "Amount", "Date")
@@ -114,5 +142,4 @@ tree.pack(pady=10, fill=tk.X)
 show_expenses()
 
 #create a main loop
-show_expenses()
 root.mainloop()
